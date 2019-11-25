@@ -31,7 +31,7 @@ export default class LoginScreen extends React.Component {
         else if (!Pass) {
             Alert.alert('Status', 'Enter your password')
         }else{
-            this.props.navigation.navigate('Home')
+            this.props.navigation.navigate('Homes')
         }
     }
 

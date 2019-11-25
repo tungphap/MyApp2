@@ -13,23 +13,24 @@ import { createBottomTabNavigator } from 'react-navigation-tabs'
 const CartStack = createStackNavigator({ CartScreen });
 const SettingStack = createStackNavigator({ SettingScreen });
 const HomeStack = createStackNavigator({ HomeScreen });
-const DetailStack = createAppContainer({ DetailScreen })
-const ProductStack = createAppContainer({ ProductScreen })
+const ProductStack = createStackNavigator({ ProductScreen })
+const DetailStack = createStackNavigator({ DetailScreen })
 
 
 const LoginHome = createStackNavigator({
     Login: {
         screen: LoginScreen
     },
-    Home: {
-        screen: HomeScreen
+    Homes: {
+        screen: HomeStack
     }
 })
 
 const BottomTab = createBottomTabNavigator({
-    Product: {screen: ProductStack},
+    Home: {screen: ProductStack},
     Cart: { screen: CartStack },
     Setting: { screen: SettingStack },
+
 })
 
 module.exports.LoginHomeStack = LoginHome;
