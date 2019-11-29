@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import ItemP from '../components/itemProduct'
+import { View, StyleSheet, Text } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 
 import AppContainer from '../Navigation'
 
 export default class HomeScreen extends React.Component {
-    static navigationOptions = {
+    static navigationOptions ={
         header: null
     }
     render(){

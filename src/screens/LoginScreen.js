@@ -4,7 +4,7 @@ import {
     StyleSheet,
     ImageBackground,
     Image, Alert, ToastAndroid,
-    Dimensions, TextInput, TouchableOpacity
+    Dimensions, TextInput, TouchableOpacity, ActivityIndicator
 } from 'react-native';
 import loginBg from '../images/loginTheme.jpg'
 import logo from '../images/logoReact.png'
@@ -18,21 +18,35 @@ export default class LoginScreen extends React.Component {
         this.state = {
             username: '',
             password: '',
+            users: null,
+            user: null,
+            animating: false
         }
     }
 
-    onSubmit() {
+    async onSubmit() {
+        try {
+            this.setState({animating: true})
+            const data = await fetch('http://188f53b6.ngrok.io/users');
+            const dataJson = await data.json();
+            this.setState({ users: dataJson })
+            console.log(this.state.users)
+        } catch (err) {
+            console.log(err)
+        }
         const User = this.state.username;
         const Pass = this.state.password;
-        
-        if (!User) {
-            ToastAndroid.show('Enter your username', ToastAndroid.SHORT)
+
+        const user = this.state.users.filter(function (item) {
+            if (item.username == User) {
+                return item;
+            }
+        });
+        if(user[0]){
+            this.setState({animating: false})
         }
-        else if (!Pass) {
-            Alert.alert('Status', 'Enter your password')
-        }else{
-            this.props.navigation.navigate('Homes')
-        }
+
+        console.log(user[0].fullname)
     }
 
     render() {
@@ -41,11 +55,13 @@ export default class LoginScreen extends React.Component {
                 <View style={styles.header}>
                     <Image source={logo} style={{ width: 150, height: 150 }} />
                     <Text style={styles.textHead}>Login</Text>
+                    <ActivityIndicator animating={this.state.animating} size="large" color="red" />
                 </View>
                 <View style={styles.body}>
                     <TextInput
                         style={styles.inputForm}
                         placeholder='Username'
+                        allowFontScaling={false}
                         onChangeText={(username) => this.setState({ username })}>
                     </TextInput>
                     <TextInput

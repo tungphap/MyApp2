@@ -22,7 +22,10 @@ const LoginHome = createStackNavigator({
         screen: LoginScreen
     },
     Homes: {
-        screen: HomeStack
+        screen: HomeScreen
+    },
+    Detail: {
+        screen: DetailScreen
     }
 })
 
@@ -30,7 +33,6 @@ const BottomTab = createBottomTabNavigator({
     Home: {screen: ProductStack},
     Cart: { screen: CartStack },
     Setting: { screen: SettingStack },
-
 })
 
 module.exports.LoginHomeStack = LoginHome;

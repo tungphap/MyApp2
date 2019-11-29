@@ -2,8 +2,12 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import imgItem from '../images/logoReact.png';
 
+
+
 export default function itemProduct(props) {
     const {product, onPress} = props;
+
+    
     return (
         <View style={styles.container}>
             <View style={styles.imgArea}>
@@ -14,6 +18,9 @@ export default function itemProduct(props) {
                 <Text>Price: 300$</Text>
                 <TouchableOpacity 
                     style={styles.btn}
+                    onPress={()=>{
+                        this.props.navigation.navigate('Detail')
+                    }}
                     >
                     <Text style={styles.titleBtn}>Detail</Text>
                 </TouchableOpacity>
