@@ -1,6 +1,11 @@
 import React from 'react';
-import { View, AsyncStorage , Text, Image, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import {
+    View, AsyncStorage,
+    Text, Image, TouchableOpacity,
+    StyleSheet, FlatList, ActivityIndicator
+} from 'react-native';
 import ItemP from '../components/itemProduct'
+import global from '../global'
 
 
 export default class ProductScreen extends React.Component {
@@ -8,34 +13,58 @@ export default class ProductScreen extends React.Component {
         title: 'Home'
     }
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            products: []
+            products: [],
+            animating: false
         }
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         try {
-            const data = await fetch('http://e0133c52.ngrok.io/product');
+            this.setState({ animating: true })
+            const data = await fetch(global.url + 'product');
             const dataJson = await data.json();
             this.setState({ products: dataJson })
+            this.setState({ animating: false })
+
         } catch (error) {
             console.error(error)
         }
     }
 
     render() {
+        const { navigation } = this.props;
         return (
-            <View>
-                <FlatList
-                    data={this.state.products}
-                    renderItem={({item}) => (
-                        <ItemP product={item}/>
-                    )}
-                    keyExtractor={item => item.id}
-                    />
+            <View style={styles.container}>
+                <ActivityIndicator style={{position:'absolute'}} animating={this.state.animating} size="large" color="green" />
+                {this.state.products.length ?
+                    (
+                        <FlatList
+                            data={this.state.products}
+                            numColumns={2}
+                            renderItem={({ item }) => (
+                                <ItemP product={item} onPress={() => {
+                                    navigation.navigate('Detail', {
+                                        title: item.name,
+                                        info: item
+                                    })
+                                }} />
+                            )}
+                            keyExtractor={item => item.id} />
+                    )
+                    :
+                    (<Text>Không có dữ liệu nào</Text>)}
+
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+})

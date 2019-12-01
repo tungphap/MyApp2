@@ -6,6 +6,7 @@ import {
     Image, Alert, ToastAndroid, AsyncStorage ,
     Dimensions, TextInput, TouchableOpacity, ActivityIndicator
 } from 'react-native';
+import global from '../global'
 import loginBg from '../images/loginTheme.jpg'
 import logo from '../images/logoReact.png'
 
@@ -28,7 +29,7 @@ export default class LoginScreen extends React.Component {
             this.setState({animating: true})
             const User = this.state.username;
             const Pass = this.state.password;
-            const data = await fetch('http://e0133c52.ngrok.io/users?username=' + User + '&password=' + Pass);
+            const data = await fetch(global.url+'users/?username=' + User + '&password=' + Pass);
             const dataJson = await data.json();
             this.setState({ user: dataJson })
             this.setState({animating: false})

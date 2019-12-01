@@ -11,16 +11,14 @@ export default function itemProduct(props) {
     return (
         <View style={styles.container}>
             <View style={styles.imgArea}>
-                <Image source={imgItem} style={styles.imgStyle} />
+                <Image source={{uri:product.image}} style={styles.imgStyle} />
             </View>
             <View style={styles.content}>
                 <Text style={styles.title}>{product.name}</Text>
-                <Text>{product.price}$</Text>
+                <Text style={styles.price}>{product.price}$</Text>
                 <TouchableOpacity 
                     style={styles.btn}
-                    onPress={()=>{
-                        this.props.navigation.navigate('Detail')
-                    }}
+                    onPress={onPress}
                     >
                     <Text style={styles.titleBtn}>Detail</Text>
                 </TouchableOpacity>
@@ -33,7 +31,6 @@ const Width_Device = Dimensions.get('window').width;
 const Height_Device = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     container: {
-        width: '45%',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -41,7 +38,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.37,
         shadowRadius: 7.49,
-
+        margin: 10,
         elevation: 12,
     },
     imgArea: {
@@ -50,8 +47,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     imgStyle: {
-        height: 100,
-        width: 100,
+        height: 180,
+        width: 180,
     },
     content: {
     },
@@ -68,6 +65,12 @@ const styles = StyleSheet.create({
     },
     titleBtn: {
         color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 15
+    },
+    price: {
+        textAlign: 'center',
+        color: 'red',
         fontWeight: 'bold',
         fontSize: 15
     }

@@ -23,7 +23,8 @@ export default class App extends React.Component {
     });
 
     const ProductStack = createStackNavigator({
-      Product: { screen: ProductScreen, navigationOptions: {  } }
+      Product: { screen: ProductScreen },
+      Detail: {screen: detailProduct}
     });
 
     const CartStack = createStackNavigator({
