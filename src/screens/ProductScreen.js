@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-    View, AsyncStorage,
+    View, AsyncStorage, Dimensions,
     Text, Image, TouchableOpacity,
     StyleSheet, FlatList, ActivityIndicator
 } from 'react-native';
 import ItemP from '../components/itemProduct'
 import global from '../global'
 
-
+const {width, height} = Dimensions.get('window');
 export default class ProductScreen extends React.Component {
     static navigationOptions = {
         title: 'Home'
@@ -55,7 +55,7 @@ export default class ProductScreen extends React.Component {
                             keyExtractor={item => item.id} />
                     )
                     :
-                    (<Text>Không có dữ liệu nào</Text>)}
+                    (<Text style={{marginTop: width*0.5}}>Không có dữ liệu nào</Text>)}
 
             </View>
         )
@@ -65,6 +65,6 @@ export default class ProductScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     }
 })

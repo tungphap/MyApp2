@@ -6,14 +6,12 @@ import imgItem from '../images/logoReact.png';
 
 export default function itemProduct(props) {
     const {product, onPress} = props;
-
-    
     return (
         <View style={styles.container}>
-            <View style={styles.imgArea}>
+            <View style={styles.header}>
                 <Image source={{uri:product.image}} style={styles.imgStyle} />
             </View>
-            <View style={styles.content}>
+            <View style={styles.body}>
                 <Text style={styles.title}>{product.name}</Text>
                 <Text style={styles.price}>{product.price}$</Text>
                 <TouchableOpacity 
@@ -27,30 +25,29 @@ export default function itemProduct(props) {
     );
 }
 
-const Width_Device = Dimensions.get('window').width;
-const Height_Device = Dimensions.get('window').height;
+const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 6,
-        },
-        shadowOpacity: 0.37,
-        shadowRadius: 7.49,
-        margin: 10,
-        elevation: 12,
+        width: width * 0.45,
+        marginLeft: 2,
+        marginRight: 2,
+        marginBottom: 10,
+        marginTop: 10,
+        borderWidth: 1,
+        borderColor: 'orange'
     },
-    imgArea: {
+    header: {
         backgroundColor: 'lightblue',
         justifyContent: 'center',
         alignItems: 'center',
+        flex: 1
     },
     imgStyle: {
-        height: 180,
-        width: 180,
+        height: height * 0.2,
+        width: width * 0.44,
     },
-    content: {
+    body: {
+        backgroundColor: '#ffd'
     },
     title: {
         fontWeight: 'bold',

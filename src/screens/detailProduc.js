@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-    View, Text, Image,
-    TouchableOpacity,
+    View, Text, Image, SafeAreaView,
+    TouchableOpacity, ScrollView,
     StyleSheet, Dimensions
 } from 'react-native';
 
@@ -16,6 +16,7 @@ export default class detailProduct extends React.Component {
         const info = this.props.navigation.getParam('info', 'false')
         return (
             <View style={styles.container}>
+                <ScrollView style = {{height: height}}>
                 <View style={styles.header}>
                     <Image source={{ uri: info.image }} style={styles.image} />
                 </View>
@@ -23,6 +24,7 @@ export default class detailProduct extends React.Component {
                     <Text style={styles.name}>{info.name}</Text>
                     <Text style={styles.price}>Price: {info.price}$</Text>
                     <Text style={{margin:5}}>{info.detail}</Text>
+
                 </View>
                 <View style={styles.footer}>
                     <TouchableOpacity style={styles.btn}>
@@ -32,7 +34,7 @@ export default class detailProduct extends React.Component {
                         <Text style={{color: '#fff',fontWeight:'bold'}}>Pay Now</Text>
                     </TouchableOpacity>
                 </View>
-                
+                </ScrollView>
             </View>
         );
     }
@@ -42,16 +44,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         borderWidth: 1,
-        margin: 5
+        borderColor: 'orange',
     },
     header: {
         flex: 1,
-
-
     },
     body: {
         flex: 1,
-
     },
     footer:{
         flex: 1,
@@ -60,7 +59,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     image: {
-        flex: 1
+        width: width,
+        height: height*0.5
     },
     name: {
         fontSize: 30,
