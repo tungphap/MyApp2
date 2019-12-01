@@ -14,8 +14,8 @@ export default function itemProduct(props) {
                 <Image source={imgItem} style={styles.imgStyle} />
             </View>
             <View style={styles.content}>
-                <Text style={styles.title}>React</Text>
-                <Text>Price: 300$</Text>
+                <Text style={styles.title}>{product.name}</Text>
+                <Text>{product.price}$</Text>
                 <TouchableOpacity 
                     style={styles.btn}
                     onPress={()=>{

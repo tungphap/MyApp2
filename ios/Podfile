@@ -42,6 +42,8 @@ target 'MyApp2' do
 
   pod 'RNScreens', :path => '../node_modules/react-native-screens'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'MyApp2Tests' do
     inherit! :search_paths
     # Pods for testing

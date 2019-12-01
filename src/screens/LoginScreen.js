@@ -3,7 +3,7 @@ import {
     View, Text,
     StyleSheet,
     ImageBackground,
-    Image, Alert, ToastAndroid,
+    Image, Alert, ToastAndroid, AsyncStorage ,
     Dimensions, TextInput, TouchableOpacity, ActivityIndicator
 } from 'react-native';
 import loginBg from '../images/loginTheme.jpg'
@@ -18,8 +18,7 @@ export default class LoginScreen extends React.Component {
         this.state = {
             username: '',
             password: '',
-            users: null,
-            user: null,
+            user: [],
             animating: false
         }
     }
@@ -27,26 +26,23 @@ export default class LoginScreen extends React.Component {
     async onSubmit() {
         try {
             this.setState({animating: true})
-            const data = await fetch('http://188f53b6.ngrok.io/users');
+            const User = this.state.username;
+            const Pass = this.state.password;
+            const data = await fetch('http://e0133c52.ngrok.io/users?username=' + User + '&password=' + Pass);
             const dataJson = await data.json();
-            this.setState({ users: dataJson })
-            console.log(this.state.users)
-        } catch (err) {
-            console.log(err)
-        }
-        const User = this.state.username;
-        const Pass = this.state.password;
-
-        const user = this.state.users.filter(function (item) {
-            if (item.username == User) {
-                return item;
-            }
-        });
-        if(user[0]){
+            this.setState({ user: dataJson })
             this.setState({animating: false})
-        }
 
-        console.log(user[0].fullname)
+            if(this.state.user.length == 0){
+                Alert.alert('Status', 'Username or Password is wrong!')
+            }else{
+                AsyncStorage.setItem('user', JSON.stringify(this.state.user[0]));
+                this.props.navigation.navigate('AppSrc')
+            }
+        } catch (err) {
+            this.setState({animating: false})
+            console.error(err)
+        }
     }
 
     render() {
