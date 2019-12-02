@@ -17,8 +17,14 @@ export default class detailProduct extends React.Component {
         super(props);
         this.state = {
             user: '',
-            info: '',
+            info: this.props.navigation.getParam('info', 'false')
         }
+    }
+
+    componentDidMount(){
+        // const product = this.props.navigation.getParam('info', 'false')
+        // this.setState({info: product})
+        console.log(this.state.info.id)
     }
     
 
@@ -35,7 +41,7 @@ export default class detailProduct extends React.Component {
                 body: JSON.stringify({
                     id: nextId(),
                     username: user.username,
-                    productID: prodId
+                    product: this.state.info
                 }),
             });
             ToastAndroid.show('Add to cart success', ToastAndroid.SHORT)
@@ -61,7 +67,7 @@ export default class detailProduct extends React.Component {
                     <View style={styles.footer}>
                         <TouchableOpacity
                             style={styles.btn}
-                            onPress={this.addCart}>
+                            onPress={this.addCart.bind(this)}>
                             <Text style={{ color: '#fff', fontWeight: 'bold' }}>Add To Cart</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.btn}>

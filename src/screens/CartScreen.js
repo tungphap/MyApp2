@@ -1,7 +1,13 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ActivityIndicator, AsyncStorage } from 'react-native';
+import {
+    View, Text, Image,
+    TouchableOpacity, StyleSheet, Dimensions,
+    ActivityIndicator, AsyncStorage, FlatList, ToastAndroid
+} from 'react-native';
 import global from '../global'
+import ItemCart from '../components/itemCart'
 
+const { width, height } = Dimensions.get('window')
 export default class CartScreen extends React.Component {
     static navigationOptions = {
         title: 'Cart'
@@ -19,24 +25,40 @@ export default class CartScreen extends React.Component {
         try {
             this.setState({ animating: true })
             const user = JSON.parse(await AsyncStorage.getItem('user'));
-            this.setState({user:user})
+            this.setState({ user: user })
             // console.log(user.username)
-            const data = await fetch(global.url + 'cart?username='+this.state.user.username);
+            const data = await fetch(global.url + 'cart?username=' + this.state.user.username);
             const dataJson = await data.json();
             this.setState({ cart: dataJson })
             this.setState({ animating: false })
-            console.log(this.state.cart)
 
         } catch (error) {
             console.error(error)
         }
     }
 
+    deleteItem() {
+        ToastAndroid.show(cartId, ToastAndroid.SHORT)
+    }
+
     render() {
         return (
-            <View>
-                <Text>Cart Screen</Text>
+            <View style={styles.container}>
+                <FlatList
+                    data={this.state.cart}
+                    renderItem={({ item }) => (
+                        <ItemCart cartItem={item} onPress={this.deleteItem}/>
+                    )}
+                    refreshing={this.state.animating}
+                    onRefresh={this.componentDidMount.bind(this)}>
+                </FlatList>
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: "center",
+    }
+})
